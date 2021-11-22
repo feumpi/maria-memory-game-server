@@ -1,5 +1,6 @@
 import cv2
 
+
 class Camera:
 
     # Initializes the camera at a specific index with the desired resolution, or with default values
@@ -30,8 +31,8 @@ class Camera:
         return img
 
     # Displays an image on a window
-    def show_image(self, img):
-        cv2.imshow("Camera", img)
+    def show_image(self, img, window="Camera"):
+        cv2.imshow(window, img)
         cv2.waitKey(1)
 
 
