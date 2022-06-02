@@ -28,6 +28,8 @@ class HandTracker:
         self.mp_draw.draw_landmarks(img, hand_landmarks,
                                     self.mp_hands.HAND_CONNECTIONS)
 
+        index_pos = (0, 0)
+
         # For each landmark
         for id, lm in enumerate(hand_landmarks.landmark):
 
@@ -37,10 +39,11 @@ class HandTracker:
 
             # Draw a circle on landmark 8 (index finger tip)
             if(id == 8):
+                index_pos = (cx, cy)
                 cv2.circle(img, (cx, cy), 10,
                            (255, 0, 255), cv2.FILLED)
 
-        return img
+        return img, index_pos
 
 
 def main():
@@ -56,7 +59,8 @@ def main():
         hand_landmarks = hand_tracker.find_hand(img)
 
         if hand_landmarks:
-            img = hand_tracker.draw_hand(img, hand_landmarks)
+            # print(hand_landmarks)
+            img, _ = hand_tracker.draw_hand(img, hand_landmarks)
 
         camera.show_image(img)
 

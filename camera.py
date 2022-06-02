@@ -5,7 +5,7 @@ class Camera:
 
     # Initializes the camera at a specific index with the desired resolution, or with default values
     def __init__(self, index=0, width=1280, height=720):
-        self.cap = cv2.VideoCapture(index, cv2.CAP_DSHOW)
+        self.cap = cv2.VideoCapture(index)
         self.cap.set(3, width)
         self.cap.set(4, height)
 

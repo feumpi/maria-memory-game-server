@@ -25,6 +25,8 @@ def calibrate():
 # Initial calibration
 contours = calibrate()
 
+selected_index = 0
+
 while True:
 
     # Recalibrate, if requested with 'c' key press
@@ -41,12 +43,19 @@ while True:
 
     img = camera.get_frame()
 
+    pointer_pos = (0, 0)
+
     hand_landmarks = hand_tracker.find_hand(img)
 
     if hand_landmarks:
-        img = hand_tracker.draw_hand(img, hand_landmarks)
+        img, pointer_pos = hand_tracker.draw_hand(img, hand_landmarks)
 
     # Draw previously found contours
-    img = calibrator.draw_shapes(img, contours)
+    img, index = calibrator.draw_shapes(img, contours, pointer_pos)
+
+    if index != selected_index:
+        selected_index = index
+        print(selected_index)
+        udp_socket.send_data(str(selected_index))
 
     camera.show_image(img)
